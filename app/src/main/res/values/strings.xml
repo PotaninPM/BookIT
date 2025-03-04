@@ -94,7 +94,7 @@
     <string name="welcome_back">С возвращением!</string>
     <string name="enter_account">Войдите в свой аккаунт, чтобы открыть для себя все возможности нашего сервиса</string>
     <string name="email_cannot_be_empty">Email cannot be empty</string>
-    <string name="invalid_email_format">Invalid email format</string>
+    <string name="invalid_email_format">Неверный формат почты</string>
     <string name="enter_as_admin">Войти как администратор</string>
     <string name="edit">Редактировать</string>
     <string name="no_server">No server connection</string>
