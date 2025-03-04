@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toFile
 import com.prod.bookit.common.AppDispatchers
 import com.prod.bookit.data.remote.api.AuthApi
 import com.prod.bookit.data.remote.dto.auth.AuthResponse
@@ -14,13 +13,10 @@ import com.prod.bookit.data.remote.dto.auth.RegisterRequestDto
 import com.prod.bookit.data.remote.dto.auth.YandexToken
 import com.prod.bookit.domain.repository.AuthRepository
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class AuthRepositoryImpl(

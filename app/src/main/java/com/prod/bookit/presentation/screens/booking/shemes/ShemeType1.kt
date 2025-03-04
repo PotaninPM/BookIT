@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,9 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.prod.bookit.presentation.models.BookObject
 import com.prod.bookit.domain.model.BookObjectUIData
-import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectDouble

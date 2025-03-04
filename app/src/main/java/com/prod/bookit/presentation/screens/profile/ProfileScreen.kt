@@ -1,6 +1,5 @@
 package com.prod.bookit.presentation.screens.profile
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,14 +21,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -52,8 +47,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.prod.bookit.R
 import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.presentation.components.QrDialog
@@ -62,7 +55,6 @@ import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import java.time.LocalDate
 
 @Composable
 fun ProfileScreen(

@@ -1,6 +1,5 @@
 package com.prod.bookit.presentation.screens.booking
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +33,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,11 +61,9 @@ import com.prod.bookit.presentation.models.FullBookingInfo
 import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
 import com.prod.bookit.presentation.screens.profile.RescheduleDialog
-import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 import com.prod.bookit.presentation.util.secondary
-import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.prod.bookit.presentation.viewModels.BookingViewModel
 import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import kotlinx.coroutines.delay

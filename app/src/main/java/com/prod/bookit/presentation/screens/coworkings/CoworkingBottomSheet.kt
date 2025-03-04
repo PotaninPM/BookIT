@@ -116,7 +116,7 @@ fun CoworkingBottomSheet(
             }
 
             Text(
-                text = stringResource(R.string.reshim_work, detail.opensAt, detail.endsAt),
+                text = stringResource(R.string.reshim_work, detail.opensAt.substring(0..4), detail.endsAt.substring(0..4)),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold

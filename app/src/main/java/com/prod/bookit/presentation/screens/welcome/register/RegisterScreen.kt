@@ -1,7 +1,6 @@
 package com.prod.bookit.presentation.screens.welcome.register
 
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -46,13 +45,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.prod.bookit.R
-import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.InputField
 import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.screens.RootNavDestinations
+import com.prod.bookit.presentation.state.AuthState
+import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthSdk

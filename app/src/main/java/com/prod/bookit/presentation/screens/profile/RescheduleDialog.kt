@@ -2,7 +2,6 @@ package com.prod.bookit.presentation.screens.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,7 +11,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
@@ -30,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.prod.bookit.R
-import com.prod.bookit.data.remote.dto.coworkings.TimeSlot
 import com.prod.bookit.presentation.components.MyTimePicker
 import com.prod.bookit.presentation.components.OutlinedBigButton
 import java.time.LocalDate
