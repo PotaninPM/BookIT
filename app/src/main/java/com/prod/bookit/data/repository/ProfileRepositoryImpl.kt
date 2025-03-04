@@ -45,6 +45,10 @@ class ProfileRepositoryImpl(
         }
     }
 
+    override suspend fun checkBooking(id: String): BookingWithOptionsDto {
+        return api.getBooking(id)
+    }
+
     override suspend fun rescheduleBooking(
         bookingId: String,
         newTimeFrom: String,

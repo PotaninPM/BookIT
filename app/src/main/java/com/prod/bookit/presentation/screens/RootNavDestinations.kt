@@ -18,4 +18,7 @@ sealed class RootNavDestinations {
 
     @Serializable
     data object Coworkings : RootNavDestinations()
+
+    @Serializable
+    data object QrCode : RootNavDestinations()
 }

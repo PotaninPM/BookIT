@@ -14,6 +14,7 @@ import com.prod.bookit.presentation.screens.welcome.welcome.WelcomeScreen
 import com.prod.bookit.presentation.screens.booking.BookingScreen
 import com.prod.bookit.presentation.screens.coworkings.CoworkingsScreen
 import com.prod.bookit.presentation.screens.profile.ProfileScreen
+import com.prod.bookit.presentation.screens.qrScan.QrScanner
 import org.koin.compose.getKoin
 
 @Composable
@@ -23,6 +24,7 @@ fun RootNavigation() {
     NavHost(
         navController = rootNavController,
         startDestination = getKoin().get<AuthRepository>().getToken()?.let {
+           //RootNavDestinations.QrCode
             RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)
         } ?: RootNavDestinations.Welcome,
         enterTransition = { EnterTransition.None },
@@ -60,6 +62,12 @@ fun RootNavigation() {
 
         composable<RootNavDestinations.Profile> {
             ProfileScreen(
+                rootNavController = rootNavController
+            )
+        }
+
+        composable<RootNavDestinations.QrCode> {
+            QrScanner(
                 rootNavController = rootNavController
             )
         }

@@ -1,6 +1,7 @@
 package com.prod.bookit.presentation.screens.profile
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,6 +84,8 @@ fun ProfileScreen(
 
     val scope = rememberCoroutineScope()
 
+    val context = LocalContext.current
+
     var currentTab by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -97,11 +101,18 @@ fun ProfileScreen(
             },
             onConfirm = { timeStart, timeEnd ->
                 scope.launch {
-                    viewModel.rescheduleBooking(
+                    val response = viewModel.rescheduleBooking(
                         bookingId = rescheduleBooking!!.id,
                         newTimeFrom = timeStart,
                         newTimeUntil = timeEnd
                     )
+
+                    if (response.status == "active") {
+                        viewModel.loadBookings()
+                        rescheduleBooking = null
+
+                        Toast.makeText(context, "Успешно перенесено", Toast.LENGTH_SHORT)
+                    }
                 }
             }
         )
@@ -147,9 +158,6 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                if (bookings.isEmpty()) {
-                    Text("У вас пока нет бронирований.")
-                } else {
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -223,7 +231,6 @@ fun ProfileScreen(
                             }
                         }
                     }
-                }
             } else {
                 Box(
                     modifier = Modifier

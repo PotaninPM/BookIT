@@ -31,6 +31,9 @@ class ProfileViewModel(
         loadProfile()
     }
 
+    private val _bookingInfo = MutableStateFlow<BookingWithOptionsDto?>(null)
+    val bookingInfo: StateFlow<BookingWithOptionsDto?> = _bookingInfo
+
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoaded.value = false
@@ -60,6 +63,16 @@ class ProfileViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _bookings.value = repository.getBookings()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun checkBooking(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _bookingInfo.value = repository.checkBooking(id)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

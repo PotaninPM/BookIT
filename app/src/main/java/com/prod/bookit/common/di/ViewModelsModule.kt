@@ -20,5 +20,5 @@ val viewModelModule = module {
 
     viewModel { ProfileViewModel(get()) }
 
-    singleOf(::BookingViewModel)
+    viewModelOf(::BookingViewModel)
 }

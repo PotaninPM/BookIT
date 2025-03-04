@@ -13,6 +13,8 @@ interface ProfileRepository {
 
     suspend fun deleteBooking(id: String): List<ProfileBookingModel>
 
+    suspend fun checkBooking(id: String): BookingWithOptionsDto
+
     suspend fun rescheduleBooking(
         bookingId: String,
         newTimeFrom: String,
