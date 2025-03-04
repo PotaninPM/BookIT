@@ -213,7 +213,8 @@ private fun BookingDetailsPreview() {
                     timeUntil = LocalTime.of(16, 0),
                     photoUrl = "sdafgh",
                     name = "Иван Иванов",
-                    email = "ivan@example.com"
+                    email = "ivan@example.com",
+                    status = "active"
                 )
             )
         }

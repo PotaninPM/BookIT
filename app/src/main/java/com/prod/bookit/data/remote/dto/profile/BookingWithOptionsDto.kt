@@ -11,3 +11,4 @@ data class BookingWithOptionsDto(
     val status: String,
     val options: List<String>
 )
+

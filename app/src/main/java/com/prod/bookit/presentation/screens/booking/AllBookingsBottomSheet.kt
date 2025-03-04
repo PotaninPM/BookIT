@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.screens.booking
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -71,7 +73,8 @@ import java.time.format.DateTimeFormatter
 fun AllBookingsBottomSheet(
     vm: BookingViewModel,
     onDismiss: () -> Unit,
-    onCancelBooking: (FullBookingInfo) -> Unit = {}
+    onCancelBooking: (FullBookingInfo) -> Unit = {},
+    onTransferClick: (FullBookingInfo) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -80,7 +83,7 @@ fun AllBookingsBottomSheet(
     var isLoading by remember { mutableStateOf(true) }
     var hasMorePages by remember { mutableStateOf(true) }
 
-    val pageSize = 5
+    val pageSize = 7
 
     LaunchedEffect(currentPage) {
         isLoading = true
@@ -112,7 +115,8 @@ fun AllBookingsBottomSheet(
             isLoading = isLoading,
             hasMorePages = hasMorePages,
             onLoadMore = { currentPage++ },
-            onCancelBooking = onCancelBooking
+            onCancelBooking = onCancelBooking,
+            onTransferClick = onTransferClick
         )
     }
 }
@@ -123,6 +127,7 @@ fun AllBookingsBottomSheetContent(
     isLoading: Boolean = false,
     hasMorePages: Boolean = false,
     onLoadMore: () -> Unit = {},
+    onTransferClick: (FullBookingInfo) -> Unit,
     onCancelBooking: (FullBookingInfo) -> Unit = {}
 ) {
     Column(
@@ -147,7 +152,10 @@ fun AllBookingsBottomSheetContent(
                 itemsIndexed(bookings) { index, booking ->
                     BookingCard(
                         booking = booking,
-                        onCancelBooking = { onCancelBooking(booking) }
+                        onCancelBooking = { onCancelBooking(booking) },
+                        onTransferClick = {
+                            onTransferClick(booking)
+                        }
                     )
 
                     if (index > bookings.size - 3) {
@@ -183,7 +191,8 @@ fun AllBookingsBottomSheetContent(
 @Composable
 fun BookingCard(
     booking: FullBookingInfo,
-    onCancelBooking: () -> Unit
+    onCancelBooking: () -> Unit,
+    onTransferClick: () -> Unit
 ) {
     val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -256,52 +265,37 @@ fun BookingCard(
             
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = onCancelBooking,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error
-                ),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Отменить бронирование",
-                    modifier = Modifier.padding(end = 4.dp)
-                )
-                Text(text = "Отменить")
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun AllBookingsBottomSheetPreview() {
-    MaterialTheme(
-        colorScheme = LightBlueTheme
-    ) {
-        Surface {
-            AllBookingsBottomSheetContent(
-                bookings = listOf(
-                    FullBookingInfo(
-                        position = 12,
-                        date = LocalDate.now(),
-                        timeFrom = LocalTime.of(14, 0),
-                        timeUntil = LocalTime.of(16, 0),
-                        photoUrl = "",
-                        name = "Иван Иванов",
-                        email = "ivan@example.com"
+            Row {
+                Button(
+                    onClick = onCancelBooking,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error
                     ),
-                    FullBookingInfo(
-                        position = 5,
-                        date = LocalDate.now().plusDays(1),
-                        timeFrom = LocalTime.of(10, 0),
-                        timeUntil = LocalTime.of(12, 0),
-                        photoUrl = "",
-                        name = "Анна Смирнова",
-                        email = "anna@example.com"
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Отменить бронирование",
+                        modifier = Modifier.padding(end = 4.dp)
                     )
-                )
-            )
+                    Text(text = "Отменить")
+                }
+
+                Spacer(modifier = Modifier.width(6.dp))
+
+                Button(
+                    onClick = onTransferClick,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Отменить бронирование",
+                        modifier = Modifier.padding(end = 4.dp)
+                    )
+                    Text(text = "Перенести")
+                }
+            }
         }
     }
 }

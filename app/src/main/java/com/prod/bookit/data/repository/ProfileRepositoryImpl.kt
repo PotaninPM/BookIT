@@ -2,8 +2,7 @@ package com.prod.bookit.data.repository
 
 import com.prod.bookit.data.mappers.toDomain
 import com.prod.bookit.data.remote.api.ProfileApi
-import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
-import com.prod.bookit.data.remote.dto.coworkings.TimeSlot
+import com.prod.bookit.data.remote.dto.booking.BookingCheckDto
 import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
 import com.prod.bookit.data.remote.dto.profile.RescheduleBookingRequest
 import com.prod.bookit.domain.model.ProfileBookingModel
@@ -45,7 +44,7 @@ class ProfileRepositoryImpl(
         }
     }
 
-    override suspend fun checkBooking(id: String): BookingWithOptionsDto {
+    override suspend fun checkBooking(id: String): BookingCheckDto {
         return api.getBooking(id)
     }
 

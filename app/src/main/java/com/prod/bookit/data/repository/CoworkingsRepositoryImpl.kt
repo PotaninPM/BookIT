@@ -10,7 +10,11 @@ class CoworkingsRepositoryImpl(
     private val api: CoworkingsApi
 ): CoworkingsRepository {
     override suspend fun getAllCoworkings(): List<CoworkingSummary> {
-        return api.getAllCoworkings().map { it.toDomain() }
+        return try {
+            api.getAllCoworkings().map { it.toDomain() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     override suspend fun getCoworkingDetail(id: String): CoworkingDetail {

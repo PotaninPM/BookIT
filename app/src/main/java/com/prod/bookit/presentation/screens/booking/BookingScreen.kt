@@ -59,8 +59,10 @@ import com.prod.bookit.presentation.models.BookingData
 import com.prod.bookit.presentation.models.BookingStatus
 import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.models.CoworkingDefaults
+import com.prod.bookit.presentation.models.FullBookingInfo
 import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
+import com.prod.bookit.presentation.screens.profile.RescheduleDialog
 import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
@@ -93,11 +95,33 @@ fun BookingScreen(
             avalibleToBook = false
         ) }
     ) }
+
     val isAdmin = profileViewModel.profile.collectAsState().value?.isBusiness ?: false
 
     var spotId by remember { mutableStateOf<String?>(null) }
 
     var allBookingsBottomSheetOpened by remember { mutableStateOf(false) }
+
+    var openTransferDialog by remember { mutableStateOf<FullBookingInfo?>(null) }
+
+    if (openTransferDialog != null) {
+        RescheduleDialog(
+            onConfirm = { start, end ->
+                coroutineScope.launch {
+                    profileViewModel.rescheduleBooking(
+                        bookingId = openTransferDialog!!.id,
+                        newTimeFrom = start,
+                        newTimeUntil = end
+                    )
+
+                    openTransferDialog = null
+                }
+            },
+            onDismiss = {
+                openTransferDialog = null
+            }
+        )
+    }
 
     LaunchedEffect(Unit) {
         bookingObjects = vm.getSpotsForCoworking(
@@ -150,7 +174,7 @@ fun BookingScreen(
             allBookingsBottomSheetOpened = true
         },
         onScanQrClicked = {
-            // TODO: navigate to scan qr screen
+            rootNavController.navigate(RootNavDestinations.QrCode)
         }
     )
 
@@ -170,6 +194,11 @@ fun BookingScreen(
                 allBookingsBottomSheetOpened = false
                 coroutineScope.launch {
                     vm.cancelBooking(booking.id)
+                }
+            },
+            onTransferClick = { it ->
+                coroutineScope.launch {
+                    openTransferDialog = it
                 }
             }
         )
@@ -205,7 +234,7 @@ private fun BookingScreenContent(
     LaunchedEffect(Unit) {
         while (true) {
             updateSpots(startTime, endTime, date)
-            delay(3000)
+            delay(1500)
         }
     }
 
@@ -253,7 +282,7 @@ private fun BookingScreenContent(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 12.dp)
         ) {
             Column {
                 Row(

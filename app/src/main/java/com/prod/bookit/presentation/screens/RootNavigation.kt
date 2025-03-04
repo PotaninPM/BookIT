@@ -24,7 +24,6 @@ fun RootNavigation() {
     NavHost(
         navController = rootNavController,
         startDestination = getKoin().get<AuthRepository>().getToken()?.let {
-           //RootNavDestinations.QrCode
             RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)
         } ?: RootNavDestinations.Welcome,
         enterTransition = { EnterTransition.None },

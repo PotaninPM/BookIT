@@ -110,8 +110,6 @@ fun ProfileScreen(
                     if (response.status == "active") {
                         viewModel.loadBookings()
                         rescheduleBooking = null
-
-                        Toast.makeText(context, "Успешно перенесено", Toast.LENGTH_SHORT)
                     }
                 }
             }

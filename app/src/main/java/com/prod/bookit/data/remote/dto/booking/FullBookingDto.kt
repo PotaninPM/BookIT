@@ -5,6 +5,7 @@ data class FullBookingDto(
     val user: UserDto,
     val spot: SpotInfoAdminDto,
     val time_from: String,
+    val status: String,
     val time_until: String,
     val options: List<String>
 )

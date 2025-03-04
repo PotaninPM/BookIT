@@ -65,6 +65,15 @@ fun QrScanner(
 
     Log.i("INFOG", bookingInfo.toString())
 
+    if (bookingInfo.value != null) {
+        BookingUserDialog(
+            bookingInfo.value!!,
+            onDismiss = {
+                viewModel.closeDialog()
+            }
+        )
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()

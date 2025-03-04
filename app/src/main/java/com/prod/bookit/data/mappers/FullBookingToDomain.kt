@@ -13,5 +13,6 @@ fun FullBookingDto.toDomain(): FullBookingInfo = FullBookingInfo(
     timeUntil = LocalDateTime.parse(time_until, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalTime(),
     photoUrl = user.avatar_url,
     name = user.full_name,
+    status = status,
     email = user.email
 )

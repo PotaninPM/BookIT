@@ -1,10 +1,8 @@
 package com.prod.bookit.presentation.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
-import com.prod.bookit.data.remote.dto.coworkings.TimeSlot
+import com.prod.bookit.data.remote.dto.booking.BookingCheckDto
 import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
 import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
@@ -13,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val repository: ProfileRepository
@@ -31,8 +28,14 @@ class ProfileViewModel(
         loadProfile()
     }
 
-    private val _bookingInfo = MutableStateFlow<BookingWithOptionsDto?>(null)
-    val bookingInfo: StateFlow<BookingWithOptionsDto?> = _bookingInfo
+    private val _bookingInfo = MutableStateFlow<BookingCheckDto?>(null)
+    val bookingInfo: StateFlow<BookingCheckDto?> = _bookingInfo
+
+    fun closeDialog() {
+        viewModelScope.launch {
+            _bookingInfo.value = null
+        }
+    }
 
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {

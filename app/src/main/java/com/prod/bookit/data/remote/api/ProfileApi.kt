@@ -1,5 +1,6 @@
 package com.prod.bookit.data.remote.api
 
+import com.prod.bookit.data.remote.dto.booking.BookingCheckDto
 import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
 import com.prod.bookit.data.remote.dto.profile.ProfileBookingDto
 import com.prod.bookit.data.remote.dto.profile.RescheduleBookingRequest
@@ -21,7 +22,7 @@ interface ProfileApi {
     @GET("bookings/{booking_id}")
     suspend fun getBooking(
         @Path("booking_id") bookingId: String
-    ): BookingWithOptionsDto
+    ): BookingCheckDto
 
     @PATCH("bookings/{booking_id}")
     suspend fun rescheduleBooking(

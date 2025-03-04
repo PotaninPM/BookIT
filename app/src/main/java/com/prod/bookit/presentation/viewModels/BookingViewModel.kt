@@ -15,6 +15,7 @@ class BookingViewModel(
     private val bookingRepository: BookingRepository
 ): ViewModel() {
 
+
     fun book(bookingData: BookingData): Flow<BookingStatus> = flow {
         emit(BookingStatus.Loading)
 

@@ -56,22 +56,38 @@ class BookingRepositoryImpl(
         timeUntil: LocalTime,
         date: LocalDate
     ): List<BookObjectUIData> = withContext(dispatchers.io) {
-        coworkingsApi.getSpots(
-            coworkingId = coworkingId,
-            timeFrom = serializeDateAndTime(timeFrom, date),
-            timeUntil = serializeDateAndTime(timeUntil, date)
-        ).map(SpotDto::toDomain)
+        try {
+            coworkingsApi.getSpots(
+                coworkingId = coworkingId,
+                timeFrom = serializeDateAndTime(timeFrom, date),
+                timeUntil = serializeDateAndTime(timeUntil, date)
+            ).map(SpotDto::toDomain)
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     override suspend fun getCurrentBookingForSpot(spotId: String): FullBookingInfo = withContext(dispatchers.io) {
-        coworkingsApi.getCurrentBookingForSpot(spotId).toDomain()
+        try {
+            coworkingsApi.getCurrentBookingForSpot(spotId).toDomain()
+        } catch (e: Exception) {
+            FullBookingInfo()
+        }
     }
 
     override suspend fun getAllBokings(page: Int, count: Int): List<FullBookingInfo> = withContext(dispatchers.io) {
-        coworkingsApi.getAllBookings(count = count, page = page).map(FullBookingDto::toDomain)
+        try {
+            coworkingsApi.getAllBookings(count = count, page = page).map(FullBookingDto::toDomain)
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     override suspend fun cancelBooking(bookingId: String) {
-        api.cancelBooking(bookingId)
+        try {
+            api.cancelBooking(bookingId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

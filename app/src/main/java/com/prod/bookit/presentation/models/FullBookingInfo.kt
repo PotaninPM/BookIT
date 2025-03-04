@@ -5,11 +5,12 @@ import java.time.LocalTime
 
 data class FullBookingInfo(
     val id: String = "",
-    val position: Int,
-    val date: LocalDate,
-    val timeFrom: LocalTime,
-    val timeUntil: LocalTime,
-    val photoUrl: String?,
-    val name: String,
-    val email: String
+    val position: Int = 1,
+    val status: String = "",
+    val date: LocalDate = LocalDate.now(),
+    val timeFrom: LocalTime = LocalTime.now(),
+    val timeUntil: LocalTime = LocalTime.now(),
+    val photoUrl: String? = "",
+    val name: String = "",
+    val email: String = ""
 )
