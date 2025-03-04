@@ -103,6 +103,7 @@ fun BookingScreen(
     var allBookingsBottomSheetOpened by remember { mutableStateOf(false) }
 
     var openTransferDialog by remember { mutableStateOf<FullBookingInfo?>(null) }
+    var changeUserInfo by remember { mutableStateOf<FullBookingInfo?>(null) }
 
     if (openTransferDialog != null) {
         RescheduleDialog(
@@ -119,6 +120,21 @@ fun BookingScreen(
             },
             onDismiss = {
                 openTransferDialog = null
+            }
+        )
+    }
+
+    if (changeUserInfo != null) {
+        ChangeUserInfoDialog(
+            userId = changeUserInfo!!.userId,
+            currentEmail = changeUserInfo!!.email,
+            currentFullName = changeUserInfo!!.name,
+            onDismiss = {
+                changeUserInfo = null
+            },
+            onConfirm = { email, name, id ->
+                profileViewModel.changeUserInfo(changeUserInfo!!.userId, email, name)
+                changeUserInfo = null
             }
         )
     }
@@ -200,6 +216,9 @@ fun BookingScreen(
                 coroutineScope.launch {
                     openTransferDialog = it
                 }
+            },
+            onChangeClick = { it ->
+                changeUserInfo = it
             }
         )
     }

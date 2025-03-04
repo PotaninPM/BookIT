@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -75,7 +76,8 @@ fun AllBookingsBottomSheet(
     vm: BookingViewModel,
     onDismiss: () -> Unit,
     onCancelBooking: (FullBookingInfo) -> Unit = {},
-    onTransferClick: (FullBookingInfo) -> Unit
+    onTransferClick: (FullBookingInfo) -> Unit,
+    onChangeClick: (FullBookingInfo) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -117,7 +119,8 @@ fun AllBookingsBottomSheet(
             hasMorePages = hasMorePages,
             onLoadMore = { currentPage++ },
             onCancelBooking = onCancelBooking,
-            onTransferClick = onTransferClick
+            onTransferClick = onTransferClick,
+            onChangeClick = onChangeClick
         )
     }
 }
@@ -129,7 +132,8 @@ fun AllBookingsBottomSheetContent(
     hasMorePages: Boolean = false,
     onLoadMore: () -> Unit = {},
     onTransferClick: (FullBookingInfo) -> Unit,
-    onCancelBooking: (FullBookingInfo) -> Unit = {}
+    onCancelBooking: (FullBookingInfo) -> Unit = {},
+    onChangeClick: (FullBookingInfo) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -156,6 +160,9 @@ fun AllBookingsBottomSheetContent(
                         onCancelBooking = { onCancelBooking(booking) },
                         onTransferClick = {
                             onTransferClick(booking)
+                        },
+                        onChangeClick = {
+                            onChangeClick(booking)
                         }
                     )
 
@@ -193,7 +200,8 @@ fun AllBookingsBottomSheetContent(
 fun BookingCard(
     booking: FullBookingInfo,
     onCancelBooking: () -> Unit,
-    onTransferClick: () -> Unit
+    onTransferClick: () -> Unit,
+    onChangeClick: () -> Unit
 ) {
     val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -266,35 +274,51 @@ fun BookingCard(
             
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row {
-                Button(
-                    onClick = onCancelBooking,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
-                    ),
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = null,
-                        modifier = Modifier.padding(end = 4.dp)
-                    )
-                    Text(text = stringResource(R.string.cancel))
+            Column {
+                Row {
+                    Button(
+                        onClick = onCancelBooking,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.error
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 4.dp)
+                        )
+                        Text(text = stringResource(R.string.cancel))
+                    }
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Button(
+                        onClick = onTransferClick,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Email,
+                            contentDescription = null,
+                            modifier = Modifier.padding(end = 4.dp)
+                        )
+                        Text(text = stringResource(R.string.transfer))
+                    }
                 }
 
-                Spacer(modifier = Modifier.width(6.dp))
-
                 Button(
-                    onClick = onTransferClick,
+                    onClick = onChangeClick,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Email,
+                        imageVector = Icons.Default.Edit,
                         contentDescription = null,
                         modifier = Modifier.padding(end = 4.dp)
                     )
-                    Text(text = stringResource(R.string.transfer))
+                    Text(text = stringResource(R.string.edit))
                 }
             }
         }

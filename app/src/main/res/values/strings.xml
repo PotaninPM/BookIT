@@ -96,4 +96,5 @@
     <string name="email_cannot_be_empty">Email cannot be empty</string>
     <string name="invalid_email_format">Invalid email format</string>
     <string name="enter_as_admin">Войти как администратор</string>
+    <string name="edit">Редактировать</string>
 </resources>

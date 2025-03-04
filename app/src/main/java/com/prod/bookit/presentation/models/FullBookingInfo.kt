@@ -5,6 +5,7 @@ import java.time.LocalTime
 
 data class FullBookingInfo(
     val id: String = "",
+    val userId: String = "",
     val position: Int = 1,
     val status: String = "",
     val date: LocalDate = LocalDate.now(),

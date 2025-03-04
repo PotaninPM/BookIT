@@ -96,4 +96,5 @@
     <string name="email_cannot_be_empty">Email cannot be empty</string>
     <string name="invalid_email_format">Invalid email format</string>
     <string name="enter_as_admin">Sign in as administrator</string>
+    <string name="edit">Edit</string>
 </resources>
