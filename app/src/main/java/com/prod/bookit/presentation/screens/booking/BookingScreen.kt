@@ -336,34 +336,36 @@ private fun BookingScreenContent(
                         contentAlignment = Alignment.TopStart,
                         initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp)
                     ) { scale, offset ->
-                        ShemeType1(
-                            isAdmin = isAdmin,
-                            bookObjects = bookObjects,
-                            onBookObjectClick = {
-                                refreshBookingStatus()
+                        if (bookObjects.isNotEmpty()) {
+                            ShemeType1(
+                                isAdmin = isAdmin,
+                                bookObjects = bookObjects,
+                                onBookObjectClick = {
+                                    refreshBookingStatus()
 
-                                if (it.avalibleToBook) {
-                                    bookingData = BookingData(
-                                        spotId = it.id,
-                                        coworkingName = coworking.name,
-                                        bookObjectPosition = it.position,
-                                        startTime = startTime,
-                                        endTime = endTime,
-                                        date = date
-                                    )
-                                } else {
-                                    openBookingDetails(it)
-                                }
-                            },
-                            modifier = Modifier
-                                .graphicsLayer {
-                                scaleX = scale
-                                scaleY = scale
-                                translationX = offset.x
-                                translationY = offset.y
-                                transformOrigin = TransformOrigin(0f, 0f)
-                            }
-                        )
+                                    if (it.avalibleToBook) {
+                                        bookingData = BookingData(
+                                            spotId = it.id,
+                                            coworkingName = coworking.name,
+                                            bookObjectPosition = it.position,
+                                            startTime = startTime,
+                                            endTime = endTime,
+                                            date = date
+                                        )
+                                    } else {
+                                        openBookingDetails(it)
+                                    }
+                                },
+                                modifier = Modifier
+                                    .graphicsLayer {
+                                        scaleX = scale
+                                        scaleY = scale
+                                        translationX = offset.x
+                                        translationY = offset.y
+                                        transformOrigin = TransformOrigin(0f, 0f)
+                                    }
+                            )
+                        }
                     }
 
                     Box(

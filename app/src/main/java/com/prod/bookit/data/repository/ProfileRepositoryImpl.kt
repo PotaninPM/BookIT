@@ -31,7 +31,11 @@ class ProfileRepositoryImpl(
     }
 
     override suspend fun getBookings(): List<ProfileBookingModel> {
-        return api.getBookings().map { it.toDomain() }
+        return try {
+            api.getBookings().map { it.toDomain() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     override suspend fun deleteBooking(id: String): List<ProfileBookingModel> {

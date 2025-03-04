@@ -56,11 +56,15 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun login(email: String, password: String): Boolean {
-        val response = api.login(LoginRequestDto(email, password))
-        val result = handleAuthResponse(response)
+        return try {
+            val response = api.login(LoginRequestDto(email, password))
+            val result = handleAuthResponse(response)
 
-        sendDeviceToken()
-        return result
+            sendDeviceToken()
+            result
+        } catch (e: Exception) {
+            false
+        }
     }
 
     override suspend fun signInWithYandex(token: String): Boolean {
