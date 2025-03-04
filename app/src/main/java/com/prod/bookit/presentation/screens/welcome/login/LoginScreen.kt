@@ -169,7 +169,7 @@ private fun LoginScreenContent(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "С возвращением!",
+                    text = stringResource(R.string.welcome_back),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -177,7 +177,7 @@ private fun LoginScreenContent(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Войдите в свой аккаунт, чтобы открыть для себя все возможности нашего сервиса",
+                    text = stringResource(R.string.enter_account),
                     style = MaterialTheme.typography.bodyMedium,
                     color = secondaryContentColor,
                     textAlign = TextAlign.Center
@@ -190,8 +190,8 @@ private fun LoginScreenContent(
                     onValueChange = {
                         email = it
                         emailError = when {
-                            it.isEmpty() -> "Email cannot be empty"
-                            !it.contains("@") -> "Invalid email format"
+                            it.isEmpty() -> context.getString(R.string.email_cannot_be_empty)
+                            !it.contains("@") -> context.getString(R.string.invalid_email_format)
                             else -> null
                         }
                     },

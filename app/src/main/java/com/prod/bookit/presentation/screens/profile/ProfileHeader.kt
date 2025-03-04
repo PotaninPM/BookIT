@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
@@ -57,7 +58,7 @@ fun ProfileHeader(
 
         if (profile.isBusiness) {
             Text(
-                text = "Админ",
+                text = stringResource(R.string.admin),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.error
@@ -66,13 +67,13 @@ fun ProfileHeader(
         }
 
         Text(
-            text = "Имя: ${profile.fullName}",
+            text = stringResource(R.string.nameeee, profile.fullName),
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = "Почта: ${profile.email}",
+            text = stringResource(R.string.email1, profile.email),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )

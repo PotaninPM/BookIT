@@ -44,11 +44,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
+import com.prod.bookit.R
 import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.util.concurrent.Executors
@@ -62,8 +64,6 @@ fun QrScanner(
     val context = LocalContext.current
 
     val bookingInfo = viewModel.bookingInfo.collectAsState()
-
-    Log.i("INFOG", bookingInfo.toString())
 
     if (bookingInfo.value != null) {
         BookingUserDialog(
@@ -123,7 +123,7 @@ fun Qr(
             Spacer(modifier = Modifier.width(6.dp))
 
             Text(
-                text = "Назад"
+                text = stringResource(R.string.back)
             )
         }
 
@@ -180,7 +180,8 @@ fun RequestCameraPermission(onPermissionGranted: () -> Unit) {
             if (isGranted) {
                 onPermissionGranted()
             } else {
-                Toast.makeText(context, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
             }
         }
     )

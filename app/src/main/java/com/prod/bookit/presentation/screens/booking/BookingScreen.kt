@@ -304,7 +304,7 @@ private fun BookingScreenContent(
                                 .background(MaterialTheme.colorScheme.primary)
                         )
 
-                        Text("  Свободно")
+                        Text(stringResource(R.string.free))
                     }
 
                     Row(
@@ -315,12 +315,11 @@ private fun BookingScreenContent(
                                 .size(24.dp)
                                 .clip(MaterialTheme.shapes.small)
                                 .background(
-                                    if (isAdmin) MaterialTheme.colorScheme.secondary
-                                    else MaterialTheme.colorScheme.onSurface.secondary
+                                    MaterialTheme.colorScheme.onSurface.secondary
                                 )
                         )
 
-                        Text("  Занято")
+                        Text(stringResource(R.string.zaniato))
                     }
                 }
 
@@ -338,7 +337,7 @@ private fun BookingScreenContent(
                     ) { scale, offset ->
                         if (bookObjects.isNotEmpty()) {
                             ShemeType1(
-                                isAdmin = isAdmin,
+                                isAdmin = false,
                                 bookObjects = bookObjects,
                                 onBookObjectClick = {
                                     refreshBookingStatus()
@@ -470,14 +469,14 @@ private fun BookingScreenContent(
                             onClick = onBookingsListClick,
                             isChosen = isChosenBtn == 1
                         ) {
-                            Text("Список броней")
+                            Text(stringResource(R.string.list_brons))
                         }
 
                         BigButton(
                             modifier = Modifier.weight(1f),
                             onClick = onScanQrClicked
                         ) {
-                            Text("Сканировать QR")
+                            Text(stringResource(R.string.scan_qr))
                         }
                     }
 
@@ -510,7 +509,7 @@ private fun BookingScreenContent(
                             },
                             isChosen = isChosenBtn == 1
                         ) {
-                            Text("Сегодня")
+                            Text(stringResource(R.string.today))
                         }
 
                         BigButton(
@@ -522,7 +521,7 @@ private fun BookingScreenContent(
                             },
                             isChosen = isChosenBtn == 2
                         ) {
-                            Text("Завтра")
+                            Text(stringResource(R.string.tomorrow))
                         }
                     }
                 }

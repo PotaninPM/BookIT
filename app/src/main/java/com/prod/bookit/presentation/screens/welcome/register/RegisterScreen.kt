@@ -290,7 +290,7 @@ fun IsAdminSwitch(
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = "Войти как администратор",
+            text = stringResource(R.string.enter_as_admin),
             style = MaterialTheme.typography.bodyMedium
         )
     }

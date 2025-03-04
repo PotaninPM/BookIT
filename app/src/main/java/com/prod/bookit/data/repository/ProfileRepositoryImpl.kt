@@ -4,6 +4,7 @@ import com.prod.bookit.data.mappers.toDomain
 import com.prod.bookit.data.remote.api.ProfileApi
 import com.prod.bookit.data.remote.dto.booking.BookingCheckDto
 import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
+import com.prod.bookit.data.remote.dto.profile.ChangeUserInfoDto
 import com.prod.bookit.data.remote.dto.profile.RescheduleBookingRequest
 import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
@@ -65,7 +66,23 @@ class ProfileRepositoryImpl(
             api.rescheduleBooking(bookingId, request)
         } catch (e: Exception) {
             e.printStackTrace()
-            throw e
+            return BookingWithOptionsDto(
+                "-1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                listOf()
+            )
+        }
+    }
+
+    override suspend fun changeUserInfo(userId: String, email: String, fullName: String) {
+        try {
+            api.changeUserInfo(userId, ChangeUserInfoDto(email, fullName))
+        } catch (e: Exception) {
+
         }
     }
 }

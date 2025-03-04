@@ -25,9 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.prod.bookit.R
 import com.prod.bookit.data.remote.dto.coworkings.TimeSlot
 import com.prod.bookit.presentation.components.MyTimePicker
 import com.prod.bookit.presentation.components.OutlinedBigButton
@@ -102,7 +104,7 @@ fun RescheduleDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Перенести время",
+                    text = stringResource(R.string.transfer_time),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -120,7 +122,11 @@ fun RescheduleDialog(
                     shape = MaterialTheme.shapes.medium,
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
                 ) {
-                    Text("Конец: ${selectedEndTime.value.format(DateTimeFormatter.ofPattern("HH:mm"))}", color = Color.White)
+                    Text(
+                        stringResource(
+                            R.string.end,
+                            selectedEndTime.value.format(DateTimeFormatter.ofPattern("HH:mm"))
+                        ), color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -131,7 +137,7 @@ fun RescheduleDialog(
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
                 ) {
-                    Text("Выбрать", color = Color.White)
+                    Text(stringResource(R.string.choosee), color = Color.White)
                 }
             }
         }

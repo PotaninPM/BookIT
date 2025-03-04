@@ -29,10 +29,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.prod.bookit.R
 import com.prod.bookit.domain.model.CoworkingDetail
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +64,7 @@ fun CoworkingBottomSheet(
                 when (imageUrls.size) {
                     1 -> Image(
                         painter = rememberAsyncImagePainter(imageUrls.first()),
-                        contentDescription = "Фото коворкинга",
+                        contentDescription = null,
                         modifier = Modifier
                             .height(200.dp)
                             .fillMaxWidth()
@@ -108,13 +110,13 @@ fun CoworkingBottomSheet(
                         .background(Color.LightGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Нет фото", color = Color.Gray)
+                    Text(text = stringResource(R.string.no_photo), color = Color.Gray)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
             Text(
-                text = "Режим работы: с ${detail.opensAt} до ${detail.endsAt}",
+                text = stringResource(R.string.reshim_work, detail.opensAt, detail.endsAt),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
@@ -142,7 +144,7 @@ fun CoworkingBottomSheet(
                           },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Выбрать")
+                Text(text = stringResource(R.string.choose))
             }
         }
     }

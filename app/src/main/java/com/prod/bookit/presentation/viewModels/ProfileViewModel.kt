@@ -82,11 +82,33 @@ class ProfileViewModel(
         }
     }
 
+    fun changeUserInfo(userId: String, email: String, fullName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.changeUserInfo(userId, email, fullName)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     suspend fun rescheduleBooking(
         bookingId: String,
         newTimeFrom: String,
         newTimeUntil: String
     ): BookingWithOptionsDto {
-        return repository.rescheduleBooking(bookingId, newTimeFrom, newTimeUntil)
+        return try {
+            repository.rescheduleBooking(bookingId, newTimeFrom, newTimeUntil)
+        } catch (e: Exception) {
+            BookingWithOptionsDto(
+                "-1",
+                "1",
+                "1",
+                "1",
+                "1",
+                "1",
+                listOf()
+            )
+        }
     }
 }

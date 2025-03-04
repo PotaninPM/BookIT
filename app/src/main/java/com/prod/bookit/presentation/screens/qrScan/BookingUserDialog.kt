@@ -16,7 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
@@ -31,7 +33,7 @@ fun BookingUserDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Верификация пройдена") },
+        title = { Text(text = stringResource(R.string.verify_passed)) },
         text = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,7 +42,7 @@ fun BookingUserDialog(
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(model = user.user.avatarUrl),
-                    contentDescription = "Avatar",
+                    contentDescription = null,
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)
@@ -49,14 +51,19 @@ fun BookingUserDialog(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = "Имя: ${user.user.fullName}", style = MaterialTheme.typography.bodyLarge)
+                Text(text = stringResource(R.string.nameee, user.user.fullName), style = MaterialTheme.typography.bodyLarge)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Email: ${user.user.email}", style = MaterialTheme.typography.bodyLarge)
+                Text(text = stringResource(R.string.emailll, user.user.email), style = MaterialTheme.typography.bodyLarge)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Место: ${user.spot.name}", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                Text(text = stringResource(R.string.placee, user.spot.name), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(8.dp))
+                val context = LocalContext.current
+
                 Text(
-                    text = "Бронь: ${formatEventDateTime(user.timeFrom,user.timeUntil)}",
+                    text = stringResource(
+                        R.string.bron_text,
+                        formatEventDateTime(user.timeFrom, user.timeUntil, context)
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
@@ -68,7 +75,7 @@ fun BookingUserDialog(
             TextButton(
                 onClick = onDismiss
             ) {
-                Text(text = "Закрыть")
+                Text(text = stringResource(R.string.close))
             }
         }
     )

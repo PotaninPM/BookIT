@@ -26,7 +26,9 @@ import com.prod.bookit.R
 import com.prod.bookit.presentation.models.FullBookingInfo
 import com.prod.bookit.presentation.theme.LightBlueTheme
 import com.prod.bookit.presentation.viewModels.BookingViewModel
+import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -84,8 +86,25 @@ private fun LoadingScreen() {
 
 @Composable
 fun BookingDetailsContent(
-    fullBookingInfo: FullBookingInfo
+    fullBookingInfo: FullBookingInfo,
+    vm: ProfileViewModel = koinViewModel()
 ) {
+    var showDialog by remember { mutableStateOf<FullBookingInfo?>(null) }
+
+    if (showDialog != null) {
+        ChangeUserInfoDialog(
+            fullBookingInfo.id,
+            fullBookingInfo.email,
+            fullBookingInfo.name,
+            onDismiss = {
+                showDialog = null
+            },
+            onConfirm = { email, name, userId ->
+                vm.changeUserInfo(userId, email, name)
+                showDialog = null
+            }
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,7 +112,7 @@ fun BookingDetailsContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Информация о бронировании",
+            text = stringResource(R.string.bronirovanie_info),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -101,7 +120,7 @@ fun BookingDetailsContent(
         )
 
         Text(
-            text = "Место №${fullBookingInfo.position}",
+            text = stringResource(R.string.place_number, fullBookingInfo.position),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -113,27 +132,39 @@ fun BookingDetailsContent(
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
         
         InfoCard(
-            title = "Дата и время",
+            title = stringResource(R.string.date_and_time),
             content = listOf(
-                "Дата: ${fullBookingInfo.date.format(dateFormatter)}",
-                "С ${fullBookingInfo.timeFrom.format(timeFormatter)} до ${fullBookingInfo.timeUntil.format(timeFormatter)}"
+                stringResource(R.string.date, fullBookingInfo.date.format(dateFormatter)),
+                stringResource(
+                    R.string.from_to,
+                    fullBookingInfo.timeFrom.format(timeFormatter),
+                    fullBookingInfo.timeUntil.format(timeFormatter)
+                )
             )
         )
         
         Spacer(modifier = Modifier.height(16.dp))
 
         InfoCard(
-            title = "Информация о пользователе",
+            title = stringResource(R.string.user_info),
             photoUrl = fullBookingInfo.photoUrl,
             content = listOf(
-                "Имя: ${fullBookingInfo.name}",
-                "Email: ${fullBookingInfo.email}"
+                stringResource(R.string.namee, fullBookingInfo.name),
+                stringResource(R.string.emaill, fullBookingInfo.email)
             ),
             icons = listOf(
                 Icons.Default.Person,
                 Icons.Default.Email
             )
         )
+
+        Button(
+            onClick = {
+                showDialog = fullBookingInfo
+            }
+        ) {
+            Text("Изменить данные юзера")
+        }
     }
 }
 
@@ -165,7 +196,7 @@ private fun InfoCard(
             if (photoUrl != null) {
                 Image(
                     painter = rememberAsyncImagePainter(photoUrl),
-                    contentDescription = "Фото профиля",
+                    contentDescription = null,
                     modifier = Modifier
                         .size(120.dp)
                         .clip(CircleShape)

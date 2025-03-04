@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -80,7 +81,7 @@ fun ProfileScreen(
     val pastBookings = bookings.filter { it.status != "active" }
 
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val tabTitles = listOf("Активные брони", "История")
+    val tabTitles = listOf(stringResource(R.string.active_brons), stringResource(R.string.history))
 
     val scope = rememberCoroutineScope()
 
@@ -107,9 +108,13 @@ fun ProfileScreen(
                         newTimeUntil = timeEnd
                     )
 
-                    if (response.status == "active") {
-                        viewModel.loadBookings()
-                        rescheduleBooking = null
+                    if (response.status == "-1") {
+                        Toast.makeText(context, "Не удалось перенести время", Toast.LENGTH_SHORT).show()
+                    } else {
+                        if (response.status == "active") {
+                            viewModel.loadBookings()
+                            rescheduleBooking = null
+                        }
                     }
                 }
             }
@@ -212,7 +217,9 @@ fun ProfileScreen(
 
                             if (bookingsToShow.isEmpty()) {
                                 Text(
-                                    text = if (page == 0) "Нет активных бронирований" else "Нет прошедших бронирований",
+                                    text = if (page == 0) stringResource(R.string.no_active) else stringResource(
+                                        R.string.no_passed
+                                    ),
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.align(Alignment.CenterHorizontally)
                                 )

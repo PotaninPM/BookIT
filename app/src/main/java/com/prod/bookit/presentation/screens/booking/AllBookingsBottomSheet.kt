@@ -52,6 +52,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -137,7 +138,7 @@ fun AllBookingsBottomSheetContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Все бронирования",
+            text = stringResource(R.string.all_bron),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -219,7 +220,7 @@ fun BookingCard(
                         modifier = Modifier.padding(bottom = 4.dp)
                     ) {
                         Text(
-                            text = "Место №${booking.position}",
+                            text = stringResource(R.string.place_num, booking.position),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -274,10 +275,10 @@ fun BookingCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Отменить бронирование",
+                        contentDescription = null,
                         modifier = Modifier.padding(end = 4.dp)
                     )
-                    Text(text = "Отменить")
+                    Text(text = stringResource(R.string.cancel))
                 }
 
                 Spacer(modifier = Modifier.width(6.dp))
@@ -290,10 +291,10 @@ fun BookingCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Email,
-                        contentDescription = "Отменить бронирование",
+                        contentDescription = null,
                         modifier = Modifier.padding(end = 4.dp)
                     )
-                    Text(text = "Перенести")
+                    Text(text = stringResource(R.string.transfer))
                 }
             }
         }

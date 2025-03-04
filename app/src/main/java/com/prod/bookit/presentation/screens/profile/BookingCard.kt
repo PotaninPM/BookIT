@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.screens.profile
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +34,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -70,7 +73,7 @@ fun BookingCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Место ${booking.title}",
+                    text = stringResource(R.string.place, booking.title),
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
                 )
 
@@ -84,8 +87,10 @@ fun BookingCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
+                val context = LocalContext.current
+
                 Text(
-                    text = formatEventDateTime(booking.timeFrom, booking.timeUntil),
+                    text = formatEventDateTime(booking.timeFrom, booking.timeUntil, context),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -112,7 +117,7 @@ fun BookingCard(
                         IconButton(onClick = { expanded = true }) {
                             Icon(
                                 imageVector = Icons.Default.MoreVert,
-                                contentDescription = "More options"
+                                contentDescription = null
                             )
                         }
                         DropdownMenu(
@@ -120,14 +125,14 @@ fun BookingCard(
                             onDismissRequest = { expanded = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Удалить") },
+                                text = { Text(stringResource(R.string.delete)) },
                                 onClick = {
                                     expanded = false
                                     onDelete()
                                 }
                             )
                             DropdownMenuItem(
-                                text = { Text("Перенести") },
+                                text = { Text(stringResource(R.string.transferr)) },
                                 onClick = {
                                     expanded = false
                                     onReschedule()
@@ -138,7 +143,7 @@ fun BookingCard(
                 }
             } else {
                 Text(
-                    text = "Завершено",
+                    text = stringResource(R.string.ended),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Gray
                 )
@@ -147,7 +152,7 @@ fun BookingCard(
     }
 }
 
-fun formatEventDateTime(startTime: String, endTime: String): String {
+fun formatEventDateTime(startTime: String, endTime: String, context: Context): String {
     val startDateTime = ZonedDateTime.parse(startTime)
     val endDateTime = ZonedDateTime.parse(endTime)
 
@@ -158,7 +163,7 @@ fun formatEventDateTime(startTime: String, endTime: String): String {
     val startTimeFormatted = startDateTime.format(timeFormatter)
     val endTimeFormatted = endDateTime.format(timeFormatter)
 
-    return "$date с $startTimeFormatted до $endTimeFormatted"
+    return context.getString(R.string.from_too, date, startTimeFormatted, endTimeFormatted)
 }
 
 @Preview

@@ -21,4 +21,6 @@ interface ProfileRepository {
         newTimeFrom: String,
         newTimeUntil: String
     ): BookingWithOptionsDto
+
+    suspend fun changeUserInfo(userId: String, email: String, fullName: String)
 }

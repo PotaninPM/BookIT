@@ -2,6 +2,7 @@ package com.prod.bookit.data.remote.api
 
 import com.prod.bookit.data.remote.dto.booking.BookingCheckDto
 import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
+import com.prod.bookit.data.remote.dto.profile.ChangeUserInfoDto
 import com.prod.bookit.data.remote.dto.profile.ProfileBookingDto
 import com.prod.bookit.data.remote.dto.profile.RescheduleBookingRequest
 import com.prod.bookit.data.remote.dto.profile.UserProfileDto
@@ -34,4 +35,10 @@ interface ProfileApi {
     suspend fun cancelBooking(
         @Path("booking_id") bookingId: String
     ): Unit
+
+    @PATCH("users/{user_id}")
+    suspend fun changeUserInfo(
+        @Path("user_id") userId: String,
+        @Body request: ChangeUserInfoDto
+    )
 }

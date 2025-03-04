@@ -101,7 +101,7 @@ private fun BookObjectDetailScreenContent(
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Text(
-                    text = "Информация:",
+                    text = stringResource(R.string.info),
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -130,14 +130,17 @@ private fun BookObjectDetailScreenContent(
             is BookingStatus.Error-> {
                 if (bookingStatus.bookObjectUIData == null) {
                     Text(
-                        text = "Ошибка! Кто-то уже забронировал это место на ваше время :(",
+                        text = stringResource(R.string.error_bron_exist),
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center
                     )
                 } else {
                     Column {
                         Text(
-                            text = "Упс! Кто-то раньше вас забронировал это место. Нашли для вас альтернативное место №${bookingStatus.bookObjectUIData.position}",
+                            text = stringResource(
+                                R.string.ups_bron_gg,
+                                bookingStatus.bookObjectUIData.position
+                            ),
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
@@ -148,14 +151,18 @@ private fun BookObjectDetailScreenContent(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = { onBookClick(bookingStatus.bookObjectUIData.id) }
                         ) {
-                            Text("Забронировать место №${bookingStatus.bookObjectUIData.position}")
+                            Text(
+                                stringResource(
+                                    R.string.bron_place,
+                                    bookingStatus.bookObjectUIData.position
+                                ))
                         }
                     }
                 }
             }
 
             is BookingStatus.Success -> Text(
-                text = "Вы успешно забронировали место! Забронированные места можно посмотреть во вкладке профиля",
+                text = stringResource(R.string.suc_bron),
                 textAlign = TextAlign.Center
             )
 

@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name" translatable="false">BookIT</string>
+    <string name="app_name">BookIT</string>
+    <string name="setting_theme" translatable="false">theme</string>
+    <string name="setting_lang" translatable="false">lang</string>
+    <string name="setting_dc" translatable="false">dc</string>
     <string name="main">Главная</string>
     <string name="sign_in">Войти</string>
-    <string name="sign_up">Зарегистрироваться</string>
+    <string name="sign_up">Регистрация</string>
     <string name="phone_number">Номер телефона</string>
     <string name="email">Электронная почта</string>
     <string name="password">Пароль</string>
@@ -17,9 +20,6 @@
     <string name="settings__theme_light">Светлая</string>
     <string name="settings__theme_system">Системная</string>
     <string name="loading">Загрузка</string>
-    <string name="setting_theme" translatable="false">theme</string>
-    <string name="setting_lang" translatable="false">lang</string>
-    <string name="setting_dc" translatable="false">dc</string>
     <string name="settings__title_theme">Тема</string>
     <string name="settings__title_lang">Язык</string>
     <string name="settings__tilte_dc">Динамические цвета</string>
@@ -40,4 +40,60 @@
     <string name="booking__from_until">С %1$s до %2$s</string>
     <string name="booking__book">Забронировать</string>
     <string name="booking__change">Изменить</string>
+    <string name="all_bron">Все бронирования</string>
+    <string name="place_num">Место №%1$s</string>
+    <string name="cancel">Отменить</string>
+    <string name="transfer">Перенести</string>
+    <string name="bronirovanie_info">Информация о бронировании</string>
+    <string name="place_number">Место №%1$s</string>
+    <string name="date_and_time">Дата и время</string>
+    <string name="date">Дата: %1$s</string>
+    <string name="from_to">С %1$s до %2$s</string>
+    <string name="user_info">Информация о пользователе</string>
+    <string name="namee">Имя: %1$s</string>
+    <string name="emaill">Email: %1$s</string>
+    <string name="free">"  Свободно"</string>
+    <string name="zaniato">"  Занято"</string>
+    <string name="list_brons">Список броней</string>
+    <string name="scan_qr">Сканировать QR</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="info">Информация:</string>
+    <string name="error_bron_exist">Ошибка! Кто-то уже забронировал это место на ваше время :(</string>
+    <string name="ups_bron_gg">Упс! Кто-то раньше вас забронировал это место. Нашли для вас альтернативное место №%1$s</string>
+    <string name="bron_place">Забронировать место №%1$s</string>
+    <string name="suc_bron">Вы успешно забронировали место! Забронированные места можно посмотреть во вкладке профиля</string>
+    <string name="no_photo">Нет фото</string>
+    <string name="reshim_work">Режим работы: с %1$s до %2$s</string>
+    <string name="choose">Выбрать</string>
+    <string name="rabota">Режим работы: с %1$s до %2$s</string>
+    <string name="coworkings">Коворкинги</string>
+    <string name="place">Место %1$s</string>
+    <string name="delete">Удалить</string>
+    <string name="transferr">Перенести</string>
+    <string name="ended">Завершено</string>
+    <string name="from_too">%1$s с %2$s до %3$s</string>
+    <string name="bron_text">Бронь: %1$s</string>
+    <string name="placee">Место: %1$s</string>
+    <string name="emailll">Email: %1$s</string>
+    <string name="nameee">Имя: %1$s</string>
+    <string name="verify_passed">Верификация пройдена</string>
+    <string name="admin">Админ</string>
+    <string name="nameeee">Имя: %1$s</string>
+    <string name="email1">Почта: %1$s</string>
+    <string name="active_brons">Активные брони</string>
+    <string name="history">История</string>
+    <string name="no_active">Нет активных бронирований</string>
+    <string name="no_passed">Нет прошедших бронирований</string>
+    <string name="transfer_time">Перенести время</string>
+    <string name="end">Конец: %1$s</string>
+    <string name="choosee">Выбрать</string>
+    <string name="close">Закрыть</string>
+    <string name="back">Назад</string>
+    <string name="camera_permission_is_required">Camera permission is required</string>
+    <string name="welcome_back">С возвращением!</string>
+    <string name="enter_account">Войдите в свой аккаунт, чтобы открыть для себя все возможности нашего сервиса</string>
+    <string name="email_cannot_be_empty">Email cannot be empty</string>
+    <string name="invalid_email_format">Invalid email format</string>
+    <string name="enter_as_admin">Войти как администратор</string>
 </resources>
