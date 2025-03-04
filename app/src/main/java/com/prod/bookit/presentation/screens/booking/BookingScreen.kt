@@ -167,9 +167,10 @@ fun BookingScreen(
             vm = vm,
             onDismiss = { allBookingsBottomSheetOpened = false },
             onCancelBooking = { booking ->
-                // Здесь можно будет добавить логику отмены бронирования
-                // vm.cancelBooking(booking)
                 allBookingsBottomSheetOpened = false
+                coroutineScope.launch {
+                    vm.cancelBooking(booking.id)
+                }
             }
         )
     }

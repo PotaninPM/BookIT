@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun FullBookingDto.toDomain(): FullBookingInfo = FullBookingInfo(
+    id = id,
     position = spot.name.drop(1).toInt(),
     date = LocalDateTime.parse(time_from, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate(),
     timeFrom = LocalDateTime.parse(time_from, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalTime(),

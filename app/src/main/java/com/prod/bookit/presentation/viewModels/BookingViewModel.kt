@@ -38,4 +38,8 @@ class BookingViewModel(
 
     suspend fun getAllCoworkings(page: Int, count: Int): List<FullBookingInfo> =
         bookingRepository.getAllBokings(page = page, count = count)
+
+    suspend fun cancelBooking(bookingId: String) {
+        bookingRepository.cancelBooking(bookingId)
+    }
 }

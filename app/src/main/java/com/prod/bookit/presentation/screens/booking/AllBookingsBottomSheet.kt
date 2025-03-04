@@ -209,12 +209,6 @@ fun BookingCard(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(bottom = 4.dp)
                     ) {
-//                        Icon(
-//                            imageVector = Icons.Default.SportsScore,
-//                            contentDescription = null,
-//                            tint = MaterialTheme.colorScheme.primary,
-//                            modifier = Modifier.padding(end = 8.dp)
-//                        )
                         Text(
                             text = "Место №${booking.position}",
                             style = MaterialTheme.typography.titleMedium,

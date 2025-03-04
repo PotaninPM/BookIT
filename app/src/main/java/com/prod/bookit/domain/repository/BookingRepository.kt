@@ -22,4 +22,6 @@ interface BookingRepository {
     suspend fun getCurrentBookingForSpot(spotId: String): FullBookingInfo
 
     suspend fun getAllBokings(page: Int, count: Int): List<FullBookingInfo>
+
+    suspend fun cancelBooking(bookingId: String)
 }

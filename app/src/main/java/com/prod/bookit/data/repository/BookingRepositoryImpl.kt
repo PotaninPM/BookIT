@@ -70,4 +70,8 @@ class BookingRepositoryImpl(
     override suspend fun getAllBokings(page: Int, count: Int): List<FullBookingInfo> = withContext(dispatchers.io) {
         coworkingsApi.getAllBookings(count = count, page = page).map(FullBookingDto::toDomain)
     }
+
+    override suspend fun cancelBooking(bookingId: String) {
+        api.cancelBooking(bookingId)
+    }
 }
