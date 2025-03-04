@@ -86,7 +86,7 @@ fun AllBookingsBottomSheet(
     var isLoading by remember { mutableStateOf(true) }
     var hasMorePages by remember { mutableStateOf(true) }
 
-    val pageSize = 7
+    val pageSize = 500
 
     LaunchedEffect(currentPage) {
         isLoading = true
@@ -154,7 +154,7 @@ fun AllBookingsBottomSheetContent(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                itemsIndexed(bookings) { index, booking ->
+                itemsIndexed(bookings.reversed()) { index, booking ->
                     BookingCard(
                         booking = booking,
                         onCancelBooking = { onCancelBooking(booking) },

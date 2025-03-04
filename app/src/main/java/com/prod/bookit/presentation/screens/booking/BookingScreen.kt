@@ -562,7 +562,8 @@ private fun BookingScreenContent(
     if (showStartTimePicker) {
         MyTimePicker(
             onTimeSelected = {
-                startTime = it
+                startTime = if (it.isBefore(LocalTime.now())) LocalTime.now().plusMinutes(10) else it
+                endTime = startTime.plusMinutes(30)
                 updateSpots(startTime, endTime, date)
                 showStartTimePicker = false
             },
