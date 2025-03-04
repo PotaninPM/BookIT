@@ -1,6 +1,5 @@
 package com.prod.bookit.presentation.screens.qrScan
 
-import android.graphics.RectF
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage

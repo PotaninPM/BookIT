@@ -5,7 +5,6 @@ import com.prod.bookit.presentation.viewModels.BookingViewModel
 import com.prod.bookit.presentation.viewModels.CoworkingsViewModel
 import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import com.prod.bookit.presentation.viewModels.SettingsViewModel
-import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
