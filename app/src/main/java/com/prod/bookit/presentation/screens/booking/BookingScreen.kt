@@ -379,6 +379,8 @@ private fun BookingScreenContent(
                                         transformOrigin = TransformOrigin(0f, 0f)
                                     }
                             )
+                        } else {
+                            Text(stringResource(R.string.no_server))
                         }
                     }
 

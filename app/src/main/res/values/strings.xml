@@ -97,4 +97,5 @@
     <string name="invalid_email_format">Invalid email format</string>
     <string name="enter_as_admin">Войти как администратор</string>
     <string name="edit">Редактировать</string>
+    <string name="no_server">No server connection</string>
 </resources>

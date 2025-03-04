@@ -97,4 +97,5 @@
     <string name="invalid_email_format">Invalid email format</string>
     <string name="enter_as_admin">Sign in as administrator</string>
     <string name="edit">Edit</string>
+    <string name="no_server">Отсутствует подключение к серверу</string>
 </resources>
