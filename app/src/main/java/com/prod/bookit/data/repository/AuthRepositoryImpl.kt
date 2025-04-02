@@ -53,11 +53,7 @@ class AuthRepositoryImpl(
             val loginResponse = api.login(LoginRequestDto(email, password))
             val result = handleAuthResponse(loginResponse)
             
-            try {
-                sendDeviceToken()
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to send device token after registration", e)
-            }
+            trySendDeviceToken("registration")
             
             result
         } catch (e: Exception) {
@@ -71,11 +67,7 @@ class AuthRepositoryImpl(
             val response = api.login(LoginRequestDto(email, password))
             val result = handleAuthResponse(response)
             
-            try {
-                sendDeviceToken()
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to send device token after login", e)
-            }
+            trySendDeviceToken("login")
             
             result
         } catch (e: Exception) {
@@ -89,16 +81,20 @@ class AuthRepositoryImpl(
             val response = api.signInWithYandex(YandexToken(token))
             val result = handleAuthResponse(response)
             
-            try {
-                sendDeviceToken()
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to send device token after Yandex sign-in", e)
-            }
+            trySendDeviceToken("Yandex sign-in")
             
             result
         } catch (e: Exception) {
             Log.e(TAG, "Yandex sign-in failed", e)
             false
+        }
+    }
+    
+    private suspend fun trySendDeviceToken(operation: String) {
+        try {
+            sendDeviceToken()
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to send device token after $operation", e)
         }
     }
 

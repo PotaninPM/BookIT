@@ -17,10 +17,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -40,7 +37,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.prod.bookit.presentation.viewModels.AuthViewModel
@@ -123,8 +119,8 @@ private fun LoadingScreen() {
 @Composable
 private fun LoginScreenContent(
     authState: AuthState,
-    onLoginClick: (email: String, password: String) -> Unit,
-    onSignInWithYandexClick: () -> Unit
+    onLoginClick: (email: String, password: String) -> Unit = { _, _ -> },
+    onSignInWithYandexClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -249,9 +245,9 @@ private fun LoginCard(
                 trailingIcon = {
                     IconButton(onClick = { onPasswordVisibilityChange(!passwordVisible) }) {
                         val visibilityIcon = if (passwordVisible) {
-                            R.drawable.ic_visibility_off
+                            R.drawable.visibility_off_24px
                         } else {
-                            R.drawable.ic_visibility
+                            R.drawable.visibility_24px
                         }
                         
                         Icon(
@@ -310,34 +306,5 @@ private fun validatePassword(password: String, context: LocalContext): String? {
         password.isEmpty() -> context.getString(R.string.password_cannot_be_empty)
         password.length < 6 -> context.getString(R.string.password_too_short)
         else -> null
-    }
-}
-
-@Composable
-private fun LoginScreenPreview() {
-    Surface {
-        LoginScreenContent(
-            AuthState.Unauthorized
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun LoginScreenDarkPreview() {
-    MaterialTheme(
-        colorScheme = darkColorScheme()
-    ) {
-        LoginScreenPreview()
-    }
-}
-
-@Preview
-@Composable
-private fun LoginScreenLightPreview() {
-    MaterialTheme(
-        colorScheme = lightColorScheme()
-    ) {
-        LoginScreenPreview()
     }
 }

@@ -47,11 +47,7 @@ class AuthViewModel(
         
         try {
             val success = action()
-            _authState.value = if (success) {
-                AuthState.Authorized
-            } else {
-                AuthState.Error("Authentication failed")
-            }
+            _authState.value = if (success) AuthState.Authorized else AuthState.Error("Authentication failed")
         } catch (e: Exception) {
             Log.e(TAG, "Authentication error", e)
             _authState.value = AuthState.Error(e.message ?: "An unexpected error occurred")
