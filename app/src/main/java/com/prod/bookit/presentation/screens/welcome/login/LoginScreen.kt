@@ -65,34 +65,10 @@ fun LoginScreen(
     authViewModel: AuthViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-
     val authState by authViewModel.authState.collectAsState()
 
-    when (authState) {
-        is AuthState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is AuthState.Authorized -> {
-            rootNavController.navigate(RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)) {
-                popUpTo(RootNavDestinations.Welcome) { inclusive = true }
-            }
-        }
-
-        is AuthState.Error -> {
-
-        }
-
-        else -> {
-
-        }
-    }
-
+    HandleAuthState(authState, rootNavController)
+    
     val yandexSdk = YandexAuthSdk.create(YandexAuthOptions(context))
     val yandexAuthLauncher = rememberLauncherForActivityResult(contract = yandexSdk.contract) { result ->
         handleYandexAuthResult(result)?.let { token ->
@@ -100,7 +76,7 @@ fun LoginScreen(
         }
     }
 
-    val onSignInWithYandexClick: () -> Unit = {
+    val onSignInWithYandexClick = {
         val loginOptions = YandexAuthLoginOptions()
         yandexAuthLauncher.launch(loginOptions)
     }
@@ -115,10 +91,40 @@ fun LoginScreen(
 }
 
 @Composable
+private fun HandleAuthState(
+    authState: AuthState,
+    rootNavController: NavHostController
+) {
+    when (authState) {
+        is AuthState.Loading -> {
+            LoadingScreen()
+        }
+        is AuthState.Authorized -> {
+            LaunchedEffect(Unit) {
+                rootNavController.navigate(RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)) {
+                    popUpTo(RootNavDestinations.Welcome) { inclusive = true }
+                }
+            }
+        }
+        else -> { }
+    }
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
 private fun LoginScreenContent(
     authState: AuthState,
-    onLoginClick: (email: String, password: String) -> Unit = { _, _ -> },
-    onSignInWithYandexClick: () -> Unit = {}
+    onLoginClick: (email: String, password: String) -> Unit,
+    onSignInWithYandexClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -149,107 +155,163 @@ private fun LoginScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        ElevatedCard(
-            elevation = CardDefaults.elevatedCardElevation(16.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.bookit_logo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(128.dp)
-                        .clip(MaterialTheme.shapes.extraLarge)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = stringResource(R.string.welcome_back),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Medium
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = stringResource(R.string.enter_account),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = secondaryContentColor,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                InputField(
-                    value = email,
-                    onValueChange = {
-                        email = it
-                        emailError = when {
-                            it.isEmpty() -> context.getString(R.string.email_cannot_be_empty)
-                            !it.contains("@") -> context.getString(R.string.invalid_email_format)
-                            else -> null
-                        }
-                    },
-                    label = stringResource(R.string.email),
-                    error = emailError,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                InputField(
-                    value = password,
-                    onValueChange = {
-                        password = it
-                        passwordError = when {
-                            it.isEmpty() -> context.getString(R.string.password_cannot_be_empty)
-                            it.length < 4 -> context.getString(R.string.password_must_be_at_least_4_characters)
-                            else -> null
-                        }
-                    },
-                    label = stringResource(R.string.password),
-                    error = passwordError,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        val image = if (passwordVisible) R.drawable.visibility_24px else R.drawable.visibility_off_24px
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            Icon(imageVector = ImageVector.vectorResource(image), contentDescription = null)
-                        }
-                    },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                BigButton(
-                    onClick = { onLoginClick(email, password) },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = isButtonEnabled && !isLoading
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp
-                        )
-                    } else {
-                        Text(stringResource(R.string.sign_in))
-                    }
-                }
-            }
-        }
-
-        AuthentificationDivider()
-
-        YandexSignInButton(onClick = onSignInWithYandexClick)
+        LoginCard(
+            email = email,
+            onEmailChange = { 
+                email = it
+                emailError = validateEmail(it, context)
+            },
+            emailError = emailError,
+            password = password,
+            onPasswordChange = { 
+                password = it
+                passwordError = validatePassword(it, context)
+            },
+            passwordError = passwordError,
+            passwordVisible = passwordVisible,
+            onPasswordVisibilityChange = { passwordVisible = it },
+            isButtonEnabled = isButtonEnabled,
+            isLoading = isLoading,
+            onLoginClick = { onLoginClick(email, password) }
+        )
+        
+        AuthenticationDividerAndYandexButton(onSignInWithYandexClick)
     }
 }
 
+@Composable
+private fun LoginCard(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    emailError: String?,
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    passwordError: String?,
+    passwordVisible: Boolean,
+    onPasswordVisibilityChange: (Boolean) -> Unit,
+    isButtonEnabled: Boolean,
+    isLoading: Boolean,
+    onLoginClick: () -> Unit
+) {
+    ElevatedCard(
+        elevation = CardDefaults.elevatedCardElevation(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.bookit_logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(128.dp)
+                    .clip(MaterialTheme.shapes.extraLarge)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = stringResource(R.string.welcome_back),
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Medium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.enter_account),
+                style = MaterialTheme.typography.bodyMedium,
+                color = secondaryContentColor,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            InputField(
+                value = email,
+                onValueChange = onEmailChange,
+                label = stringResource(R.string.email),
+                error = emailError,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            InputField(
+                value = password,
+                onValueChange = onPasswordChange,
+                label = stringResource(R.string.password),
+                error = passwordError,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+                trailingIcon = {
+                    IconButton(onClick = { onPasswordVisibilityChange(!passwordVisible) }) {
+                        val visibilityIcon = if (passwordVisible) {
+                            R.drawable.ic_visibility_off
+                        } else {
+                            R.drawable.ic_visibility
+                        }
+                        
+                        Icon(
+                            imageVector = ImageVector.vectorResource(visibilityIcon),
+                            contentDescription = if (passwordVisible) {
+                                stringResource(R.string.hide_password)
+                            } else {
+                                stringResource(R.string.show_password)
+                            }
+                        )
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            BigButton(
+                onClick = onLoginClick,
+                text = stringResource(R.string.sign_in),
+                enabled = isButtonEnabled && !isLoading,
+                isLoading = isLoading,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
+private fun AuthenticationDividerAndYandexButton(
+    onSignInWithYandexClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AuthentificationDivider()
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        YandexSignInButton(
+            onClick = onSignInWithYandexClick,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+private fun validateEmail(email: String, context: LocalContext): String? {
+    return when {
+        email.isEmpty() -> context.getString(R.string.email_cannot_be_empty)
+        !email.contains("@") -> context.getString(R.string.invalid_email_format)
+        else -> null
+    }
+}
+
+private fun validatePassword(password: String, context: LocalContext): String? {
+    return when {
+        password.isEmpty() -> context.getString(R.string.password_cannot_be_empty)
+        password.length < 6 -> context.getString(R.string.password_too_short)
+        else -> null
+    }
+}
 
 @Composable
 private fun LoginScreenPreview() {
